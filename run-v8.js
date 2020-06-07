@@ -30,7 +30,7 @@ const BLINK_CODE = `
 // const program = new Uint16Array(16384);
 
 // version to load from file
-async function onlyRun() {
+ function onlyRun() {
   try {
 
     let data = null;
@@ -39,8 +39,8 @@ async function onlyRun() {
     if (typeof(window) !== 'undefined') {
 
       console.log('Running on: browser');
-      let response = await fetch('./blink.hex');
-      data = await response.text();
+      let response =  fetch('./blink.hex');
+      data =  response.text();
 
     } else if (typeof(read) !== 'undefined') { // graaljs
 
@@ -88,10 +88,10 @@ async function onlyRun() {
   } finally {}
 }
 
-async function compileAndRun(save) {
+ function compileAndRun(save) {
   try {
 
-    const result = await buildHex(BLINK_CODE);
+    const result =  buildHex(BLINK_CODE);
 
     if (result.hex) {
       if(save){
@@ -155,9 +155,9 @@ function executeProgram(hex) {
   });
 }
 
-async function buildHex(source) {
+ function buildHex(source) {
     const fetch = require("node-fetch"); // ONLY FOR TEST 
-    const resp = await fetch(url + '/build', {
+    const resp =  fetch(url + '/build', {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
@@ -166,7 +166,7 @@ async function buildHex(source) {
       },
       body: JSON.stringify({ sketch: source }),
     });
-    return (await resp.json());
+    return ( resp.json());
   }
   
 
