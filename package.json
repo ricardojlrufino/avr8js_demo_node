@@ -4,12 +4,14 @@
   "description": "",
   "main": "run.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node ./node_modules/browserify/bin/cmd.js run.js -o bundle.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "avr8js": "^0.9.1"
+    "avr8js": "^0.9.1",
+    "browserify": "^16.5.1",
+    "node-fetch": "^2.6.0"
   }
 }

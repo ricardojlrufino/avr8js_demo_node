@@ -29,42 +29,80 @@ void loop() {
 
 // version to load from file
 async function onlyRun() {
-    try{
-        await fs.readFile('./blink.hex', 'utf8', function (err,data) {
-            console.log('error : ' + err);
-            if (data) {
-                console.log('Program running...');
-                executeProgram(data);
-              } else {
-              }
-        });
+  try {
 
-    } catch (err) {
-  
-      console.error('Failed: ' + err);
-    } finally {
+    let data = null;
+
+    // browser...
+    if (typeof(window) !== 'undefined') {
+
+      console.log('Running on: browser');
+      let response = await fetch('./blink.hex');
+      data = await response.text();
+
+    } else if (typeof(read) !== 'undefined') { // graaljs
+
+      console.log('Running on: graaljs');
+      data = read('./blink.hex');
+
+    } else if (typeof(Java) !== 'undefined') { // graaljs
+
+
+      console.log('Running on: Java');
+
+      var StringClass = Java.type('java.lang.String');
+      var Files = Java.type('java.nio.file.Files');
+      var Paths = Java.type('java.nio.file.Paths');
+
+      data = new StringClass(Files.readAllBytes(Paths.get("./blink.hex")));
+      print(data);
+
+
+    } else { // nodejs
+
+      console.log('Running on: NodeJS');
+
+      fs.readFile('./blink.hex', 'utf8', function(err, data) {
+        if (err) {
+          return console.log(err);
+        }
+
+        console.log('Program running...');
+        executeProgram(data);
+
+      })
+
+      // console.log('response',response);
     }
-  }
+
+    if (data) {
+      console.log('Program running...');
+      executeProgram(data);
+    }
+
+  } catch (err) {
+
+    console.error('Failed: ' + err);
+  } finally {}
+}
 
 async function compileAndRun() {
-    try{
-      const result = await buildHex(BLINK_CODE);
-      
-      if (result.hex) {
-        // fs.writeFile('./blink.hex', result.hex, function (err) {
-        //     if (err) return console.log(err);
-        //     console.log("Done save...");
-        // });  
-        console.log('Program running...');
-        executeProgram(result.hex);
-      } else {
-      }
-    } catch (err) {
-  
-      console.error('Failed: ' + err);
-    } finally {
-    }
-  }
+  try {
+    const result = await buildHex(BLINK_CODE);
+
+    if (result.hex) {
+      // fs.writeFile('./blink.hex', result.hex, function (err) {
+      //     if (err) return console.log(err);
+      //     console.log("Done save...");
+      // });  
+      console.log('Program running...');
+      executeProgram(result.hex);
+    } else {}
+  } catch (err) {
+
+    console.error('Failed: ' + err);
+  } finally {}
+}
 
   // Set up toolbar
 let runner;
@@ -103,6 +141,7 @@ async function buildHex(source) {
     return (await resp.json());
   }
   
+
 
   onlyRun();
 //   compileAndRun();
