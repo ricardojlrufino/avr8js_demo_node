@@ -1,0 +1,15 @@
+{
+  "name": "avr8js_demo_node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "run.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "avr8js": "^0.9.1"
+  }
+}
