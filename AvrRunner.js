@@ -37,8 +37,8 @@ class AVRRunner {
     while (this.cpu.cycles < cyclesToRun) {
       avr8js_1.avrInstruction(this.cpu);
       this.timer0.tick();
-      this.timer1.tick();
-      this.timer2.tick();
+      // this.timer1.tick();
+      // this.timer2.tick();
       this.usart.tick();
     }
 
