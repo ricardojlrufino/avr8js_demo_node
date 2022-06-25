@@ -12,6 +12,6 @@
   "dependencies": {
     "avr8js": "^0.9.1",
     "browserify": "^16.5.1",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.7"
   }
 }
